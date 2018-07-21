@@ -2,13 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const PORT = 3000;
-
-// create an instance of express
+const api = require('./routes/api')
+// creates an instance of express
 const app = express();
 
 // specify that the body parser will handle JSON data
 app.use(bodyParser.json());
 
+app.use('/api', api);     
 // test a 'get' request. Remember: app is the instance of the express framework, so this is like saying express.get()
 // This is a 'get' request. .get() takes in two parameters:
 //    1.  '/' (the path)
