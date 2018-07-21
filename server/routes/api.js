@@ -67,6 +67,97 @@ router.post('/login', (req, res) => {
    })
 })
 
+// GET request for events
+router.get('/events', (req, res) => {
+   let events = [
+      {
+         "_id": "1",
+         "name": "Auto Show",
+         "description": "Twin Cities annual auto show",
+         "date": "2012-04-23T18:25:43.511Z"
+       },
+       {
+         "_id": "2",
+         "name": "Amatuer Photography Expo",
+         "description": "Explore the hidden talent in the amatuer photography community of the Twin Cities",
+         "date": "2012-04-23T18:25:43.511Z"
+       },
+       {
+         "_id": "3",
+         "name": "HackNoon Hackathon",
+         "description": "Hack Today, Code Tomorrow",
+         "date": "2012-04-23T18:25:43.511Z"
+       },
+       {
+         "_id": "4",
+         "name": "Scrapbook Convention",
+         "description": "Creative Memories brings together scrapbooking enthusiasts of the Twin Cities",
+         "date": "2012-04-23T18:25:43.511Z"
+       },
+       {
+         "_id": "5",
+         "name": "JavaScript Nation",
+         "description": "JavaScript Nation brings its traveling Symposium to the Twin Cities",
+         "date": "2012-04-23T18:25:43.511Z"
+       },
+       {
+         "_id": "6",
+         "name": "Bizarre Foods with Chef Andrew Zimmern",
+         "description": "Andrew Zimmern brings some of the most bizarre foods he    has ever eaten to the Twin Cities",
+         "date": "2012-04-23T18:25:43.511Z"
+       }
+     ]
+     res.json(events);
+   })
+   
+   // for special events
+   router.get('/special', (req, res) => {
+      let events = [
+         {
+            "_id": "1",
+            "name": "Classic and Specialty Cars",
+            "description": "Meet car enthusiasts who collect to the point of obsession",
+            "date": "2012-04-23T18:25:43.511Z"
+         },
+         {
+            "_id": "2",
+            "name": "Meet and Greet U2",
+            "description": "Meet U2 before their concert at Excel Energy Center. Available only to members of Events.com. Only 100 spaces available",
+            "date": "2012-04-23T18:25:43.511Z"
+         },
+         {
+            "_id": "3",
+            "name": "Pottery Expo",
+            "description": "Pottery techniques, artistry, and wares on display at the Minneapolis Convention Center for only two days!",
+            "date": "2012-04-23T18:25:43.511Z"
+         },
+         {
+            "_id": "4",
+            "name": "Pottery Expo Special",
+            "description": "Go behind the scenes with this special all access pass and meet the artists who create the magic.",
+            "date": "2012-04-23T18:25:43.511Z"
+         },
+         {
+            "_id": "5",
+            "name": "Poetry In Motion",
+            "description": "Hear exceptionally gifted, up and coming poets read their own works",
+            "date": "2012-04-23T18:25:43.511Z"
+          },
+         {
+            "_id": "6",
+            "name": "Rare Book Symposium",
+            "description": "Rare books, new and used",
+            "date": "2012-04-23T18:25:43.511Z"
+         }
+      ]
+      res.json(events);
+   })
+   
+   
+   
+
+
+
 // export the router
 // need to tell the server to use this route
 module.exports = router;
