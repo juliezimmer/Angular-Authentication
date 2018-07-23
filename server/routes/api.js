@@ -1,6 +1,7 @@
 // all API endpoints defined here
 // import express, router
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 
 // bring in the user model/schema
@@ -36,10 +37,12 @@ router.post('/register', (req, res) => {
    user.save((error, registeredUser) => {
       if (error) {
          console.log(error);
-      } else {
-         // send a 200 status and the registeredUser
-         res.status(200).send(registeredUser);
-         console.log(`This is the new user: ${registeredUser}`);
+      } else { // create the payload for JWT generation
+         let payload = { subject: registeredUser._id }
+         // the token needs to be signed and generated
+         let token = jwt.sign(payload, 'secretKey');
+         // send the token as a token with the response
+         res.status(200).send({token});
       }
    })
 })
@@ -61,7 +64,9 @@ router.post('/login', (req, res) => {
          if (user.password !== userData.password) {
                res.status(401).send("invalid password");
          } else {
-            res.status(200).send(user);
+            let payload = { subject: user._id }
+            let token = jwt.sign(payload,'secretKey');
+            res.status(200).send({token});
          }
       }
    })
@@ -79,31 +84,31 @@ router.get('/events', (req, res) => {
        {
          "_id": "2",
          "name": "Amatuer Photography Expo",
-         "description": "Explore the hidden talent in the amatuer photography community of the Twin Cities",
+         "description": "Showcase for amatuer photography",
          "date": "2012-04-23T18:25:43.511Z"
        },
        {
          "_id": "3",
-         "name": "HackNoon Hackathon",
+         "name": "HackerNoon Hackathon",
          "description": "Hack Today, Code Tomorrow",
          "date": "2012-04-23T18:25:43.511Z"
        },
        {
          "_id": "4",
          "name": "Scrapbook Convention",
-         "description": "Creative Memories brings together scrapbooking enthusiasts of the Twin Cities",
+         "description": "Sponsored by Creative Memories",
          "date": "2012-04-23T18:25:43.511Z"
        },
        {
          "_id": "5",
          "name": "JavaScript Nation",
-         "description": "JavaScript Nation brings its traveling Symposium to the Twin Cities",
+         "description": "JavaScript Nation traveling Symposium",
          "date": "2012-04-23T18:25:43.511Z"
        },
        {
          "_id": "6",
-         "name": "Bizarre Foods with Chef Andrew Zimmern",
-         "description": "Andrew Zimmern brings some of the most bizarre foods he    has ever eaten to the Twin Cities",
+         "name": "Bizarre Foods",
+         "description": "Andrew Zimmern and bizarre foods",
          "date": "2012-04-23T18:25:43.511Z"
        }
      ]
@@ -116,36 +121,36 @@ router.get('/events', (req, res) => {
          {
             "_id": "1",
             "name": "Classic and Specialty Cars",
-            "description": "Meet car enthusiasts who collect to the point of obsession",
+            "description": "Come one, come all car enthusiasts",
             "date": "2012-04-23T18:25:43.511Z"
          },
          {
             "_id": "2",
             "name": "Meet and Greet U2",
-            "description": "Meet U2 before their concert at Excel Energy Center. Available only to members of Events.com. Only 100 spaces available",
+            "description": "Only open to Eventhub members",
             "date": "2012-04-23T18:25:43.511Z"
          },
          {
             "_id": "3",
             "name": "Pottery Expo",
-            "description": "Pottery techniques, artistry, and wares on display at the Minneapolis Convention Center for only two days!",
+            "description": "Pottery on display",
             "date": "2012-04-23T18:25:43.511Z"
          },
          {
             "_id": "4",
             "name": "Pottery Expo Special",
-            "description": "Go behind the scenes with this special all access pass and meet the artists who create the magic.",
+            "description": "Go behind the scenes",
             "date": "2012-04-23T18:25:43.511Z"
          },
          {
             "_id": "5",
             "name": "Poetry In Motion",
-            "description": "Hear exceptionally gifted, up and coming poets read their own works",
+            "description": "Up and coming poets read their own work",
             "date": "2012-04-23T18:25:43.511Z"
           },
          {
             "_id": "6",
-            "name": "Rare Book Symposium",
+            "name": "Rare Book Gathering",
             "description": "Rare books, new and used",
             "date": "2012-04-23T18:25:43.511Z"
          }
