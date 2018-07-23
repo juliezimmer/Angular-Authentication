@@ -1,5 +1,8 @@
-<div class="row pt-5"> <!-- pt-5 moves the card down a little bit so it isn't pushed up against the bottom of the navbar. -->
+<div class="row py-5"> <!-- pt-5 moves the card down a little bit so it isn't pushed up against the bottom of the navbar. -->
+  
    <div class="col-md-6 mx-auto">
+      <span class="anchor" id="formLogin"></span>
+      
       <div class="card rounded-0">
          <!-- card header -->
          <div class="card-header">
@@ -10,20 +13,20 @@
             <form class="form">
                <!-- email form group -->
                <div class="form-group">
-                  <label for="">Email</label>
+                  <label for="uname1">Username</label>
                   <!-- the ngModel directive creates two-way binding with the input from the user and the registerUserData property in the component class,RegisterComponent. -->
-                  <input [(ngModel)]="loginUserData.email"                name="email" 
+                  <input [(ngModel)]="loginUserData.email"                       name="email" 
                      type="text" 
                      class="form-control rounded-0" 
                      required>
                </div> <!-- end Email form-group-->
                <!-- password form-group -->
                <div class="form-group">
-                  <label for="">Password</label>
+                  <label>Password</label>
                   <input [(ngModel)]="loginUserData.password"               name="password" 
-                    type="password" 
-                    class="form-control rounded-0" 
-                    required>
+                  type="password" 
+                  class="form-control rounded-0" 
+                  required>
                </div> <!-- end password form group-->
                <button (click)="loginUser()" class="btn btn-success float-right" type="button">Login</button>
             </form>
