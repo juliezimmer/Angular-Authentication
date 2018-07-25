@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../event.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -17,8 +18,15 @@ export class SpecialEventsComponent implements OnInit {
       this._eventService.getSpecialEvents()
          .subscribe(
             res => this.specialEvents = res,
-            err => console.log(err)
+            err => {
+               if (err instanceof HttpErrorResponse ){
+                  if (err.status === 401) { 
+                     // redirect to login
+                     this._router.navigate(['/login'])
+
+                  }
+               }
+            }
          )
    }
-
 }

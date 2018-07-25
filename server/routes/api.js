@@ -1,13 +1,11 @@
 // all API endpoints defined here
 // import express, router
 const express = require('express');
-const jwt = require('jsonwebtoken');
 const router = express.Router();
-
+const mongoose = require ('mongoose');
 // bring in the user model/schema
 const User = require('../models/user');
-
-const mongoose = require ('mongoose');
+const jwt = require('jsonwebtoken');
 // declare connection string to the db
 const db = "mongodb://userjulie:juliespw77@ds147451.mlab.com:47451/angular_auth_events_db" 
 
@@ -18,7 +16,27 @@ mongoose.connect(db, err => {
    } else {
       console.log("Connected to MongoDB");
    }
-})
+});
+
+// middleware to verify token
+// function has access to the request, response, and next for execution
+function verifyToken(req, res, next){
+   // check that authorizationKey is part of the header
+   if(!req.headers.authorization){
+      return res.status(401).send("unauthorized request");
+   } 
+   let token = req.headers.authorization.split(' ')[1]
+   if (token  === 'null') {
+      return res.status(401).send("Unaithorized request")
+   }
+   let payload = jwt.verify(token,'SecretKey')
+   // if NO payload, token is invalid
+   if (!payload) {
+      res.status(401).send("Invalid token")
+   }  
+   req.userId = payload.subject
+   next()
+}  
 
 // GET request
 // .get() takes in a callback function as a parameter.
@@ -116,7 +134,7 @@ router.get('/events', (req, res) => {
    })
    
    // for special events
-   router.get('/special', (req, res) => {
+   router.get('/special', verifyToken, (req, res) => {
       let events = [
          {
             "_id": "1",
@@ -158,11 +176,6 @@ router.get('/events', (req, res) => {
       res.json(events);
    })
    
-   
-   
-
-
-
 // export the router
 // need to tell the server to use this route
 module.exports = router;
