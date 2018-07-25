@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';  
 import { Router } from '@angular/router';
 
-@Injectable({
-   providedIn: 'root'
-})
+@Injectable()
 export class AuthService {
    // stores backend api url
    private _registerUrl = "http://localhost:5000/api/register";
@@ -21,11 +19,6 @@ export class AuthService {
       return this.http.post<any>(this._loginUrl,user);  
    }
 
-   loggedIn(){
-      // checks local storage for an auth token and always returns true or false
-      return !!localStorage.getItem('token')
-   }
-
    logoutUser(){
       localStorage.removeItem('token') 
       // when the token has been removed, the user navigates to the events view
@@ -34,5 +27,10 @@ export class AuthService {
 
    getToken(){
       return localStorage.getItem('token')
+   }
+   
+   loggedIn(){
+      // checks local storage for an auth token and always returns true or false
+      return !!localStorage.getItem('token')
    }
 }
